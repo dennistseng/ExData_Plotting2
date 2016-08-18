@@ -1,8 +1,9 @@
 Source_Classification_Code <- readRDS("Source_Classification_Code.rds")
 PM25 <- readRDS("summarySCC_PM25.rds")
 
-total <- aggregate(Emissions ~ year, PM25, sum)
+filter <- subset(PM25, fips == '24510')
+total <- aggregate(Emissions ~ year, filter, sum)
 
-png("plot1.png")
+png("plot2.png")
 barplot(total$Emissions,names.arg = total$year)
 dev.off()
