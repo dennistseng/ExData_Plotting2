@@ -8,13 +8,15 @@ class1 <- grep("vehicle",Source_Classification_Code$EI.Sector,value=T,ignore.cas
 class2 <- subset(Source_Classification_Code, Source_Classification_Code$EI.Sector %in% class1, select = SCC)
 filter2 <- subset(filter, filter$SCC %in% class2$SCC)
 total <- aggregate(Emissions ~ year * fips, filter2, sum)
+total$city <- rep(NA, nrow(total))
+total[total$fips == "06037", ][, "city"] <- "LA"
+total[total$fips == "24510", ][, "city"] <- "Baltimore"
 
 png('plot6.png')
 
-plot <- ggplot(total, aes(x=year, y=Emissions),color=fips) +
-  geom_point(alpha=.3) +
-  geom_smooth(alpha=.2, size=1, method="loess") +
-  ggtitle("Total PM2.5 Coal Combustion Emissions in the US")
+plot <- ggplot(total, aes(x=factor(year), y=Emissions, fill=city)) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  ggtitle("Vehicle Emissions - Baltimore vs LA")
 print(plot)
 
 dev.off()

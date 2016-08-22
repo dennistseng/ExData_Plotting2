@@ -11,10 +11,9 @@ total <- aggregate(Emissions ~ year, filter2, sum)
 
 png('plot5.png')
 
-plot <- ggplot(total, aes(x=year, y=Emissions)) +
-  geom_point(alpha=.3) +
-  geom_smooth(alpha=.2, size=1) +
-  ggtitle("Total PM2.5 Coal Combustion Emissions in the US")
+plot <- ggplot(total, aes(x=factor(year), y=Emissions)) +
+  geom_bar(colour="black", stat="identity") +
+  ggtitle("Coal Emissions in Baltimore")
 print(plot)
 
 dev.off()
