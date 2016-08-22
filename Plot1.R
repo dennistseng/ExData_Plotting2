@@ -4,5 +4,5 @@ PM25 <- readRDS("summarySCC_PM25.rds")
 total <- aggregate(Emissions ~ year, PM25, sum)
 
 png("plot1.png")
-barplot(total$Emissions,names.arg = total$year)
+barplot(total$Emissions, names.arg = total$year)
 dev.off()
